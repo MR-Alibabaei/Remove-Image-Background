@@ -1,4 +1,3 @@
-from doctest import OutputChecker
 from rembg import remove
 from PIL import Image
 from easygui import fileopenbox,diropenbox,msgbox
