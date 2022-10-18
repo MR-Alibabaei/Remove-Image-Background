@@ -1,6 +1,7 @@
 from rembg import remove
 from PIL import Image
 from easygui import fileopenbox,diropenbox,msgbox
+from re import findall
 
 class data():
     si_msg = ""
@@ -44,6 +45,14 @@ def select_output_folder():
         return False
     return output_folder
 
+def remove_background(list_image, output_folder_path):
+    for loop_image in list_image:
+        output_image_path = output_folder_path +"\\\\"+ findall(".*\\\\(.*)\..*",loop_image)[0] + "_output" + ".png"
+        input_image = Image.open(loop_image)
+        output_image = remove(input_image)
+        output_image.save(output_image_path)
+    return 0
+
 
 
 
@@ -60,9 +69,12 @@ def main():
     if list_input_images == False:
         return 0
     print(list_input_images)
-    output_folder = select_output_folder()
-    if output_folder == False:
+    output_folder_path = select_output_folder()
+    if output_folder_path == False:
         return 0
-    print(output_folder)
+    print(output_folder_path)
+
+    remove_background(list_input_images, output_folder_path)
+
 if __name__ == "__main__":
     main()
