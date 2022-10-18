@@ -1,21 +1,28 @@
+from doctest import OutputChecker
 from rembg import remove
 from PIL import Image
-from easygui import fileopenbox,msgbox
+from easygui import fileopenbox,diropenbox,msgbox
 
 class data():
     si_msg = ""
     si_title = ""
+    si_default = ""
     si_filetype = ["*.png","*.jpg"]
     si_multiple = True
+
     simb_msg = "The format of these files is not supported\n"
     simb_title = ""
+
+    sof_msg = ""
+    sof_title = ""
+    sof_default = ""
 
 
 
 
 
 def select_image():
-    file_list = fileopenbox(msg=data.si_msg,title=data.si_title,filetypes=data.si_filetype,multiple=data.si_multiple)
+    file_list = fileopenbox(msg=data.si_msg,title=data.si_title,default=data.si_default,filetypes=data.si_filetype,multiple=data.si_multiple)
     image_list = []
     not_image_list = []
 
@@ -32,6 +39,13 @@ def select_image():
 
     return file_list
 
+def select_output_folder():
+    output_folder = diropenbox(msg=data.sof_msg, title=data.sof_title, default=data.sof_default)
+    if output_folder == None:
+        return False
+    return output_folder
+
+
 
 
 # input_path = "test/2.jpg"
@@ -47,5 +61,9 @@ def main():
     if list_input_images == False:
         return 0
     print(list_input_images)
+    output_folder = select_output_folder()
+    if output_folder == False:
+        return 0
+    print(output_folder)
 if __name__ == "__main__":
     main()
